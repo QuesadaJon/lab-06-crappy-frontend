@@ -8,7 +8,6 @@ import {
 import './App.css'
 import ListPage from './function-pages/ListPage.js';
 import CreatePage from './function-pages/CreatePage.js';
-import UpdatePage from './function-pages/DetailsPage';
 import DetailsPage from './function-pages/DetailsPage';
 
 export default class App extends Component {
