@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { fetchClasses } from '../fetches.js'
+import { Link } from 'react-router-dom';
+
 
 export default class ListPage extends Component {
     state = {
@@ -18,13 +20,12 @@ export default class ListPage extends Component {
              {
                classes.length === 0
                ? 'loading'
-               :classes.map(ffclass => <div className="class-render" height="200" width="200">
+               :classes.map(ffclass => <Link to={`details/${ffclass.id}`}><div className="class-render" height="200" width="200">
                  <div>Id: {ffclass.id}</div>
                  <div>Class: {ffclass.class}</div>
                  <div>Cool Factor: {ffclass.cool_factor}</div>
                  <div>Role: {ffclass.role}</div>
-                 </div>
-                 )
+                 </div></Link>)
              }
            </div>
         )

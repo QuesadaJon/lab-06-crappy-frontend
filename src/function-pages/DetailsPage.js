@@ -1,16 +1,32 @@
 import React, { Component } from 'react'
-import { fetchRoles, updateClass } from '../fetches.js'
+import { 
+  fetchClass, 
+  fetchRoles, 
+  updateClass, 
+  deleteClass,
+} from '../fetches.js'
 
 export default class CreatePage extends Component {
   state = {
-    roles: []
+    roles: [],
+    job: {},
+    class: '',
+    cool_factor: 0,
+    role_id: 0
   }
 
   componentDidMount = async () => {
     const roles = await fetchRoles();
-    console.log(roles)
-
-    this.setState({ roles });
+    const job = await fetchClass(this.props.match.params.id);
+    
+    this.setState({ 
+      roles, 
+      job, 
+      class: job.class,
+      cool_factor: job.cool_factor,
+      role_id: job.class,
+    });
+    console.log(this.state)
  }
 
   handleSubmit = async (e) =>{
@@ -28,10 +44,19 @@ export default class CreatePage extends Component {
     });
     
     this.props.history.push('/');
-
   }
 
-  handleChange = (e) => {
+  handleClick = async (e) =>{
+    e.preventDefault();
+
+    await deleteClass(
+      this.props.match.params.id
+    );
+
+    this.props.history.push('/');
+  }
+
+  handleDelete = (e) => {
     this.setState({ role: e.target.value})
   }
        
@@ -39,14 +64,20 @@ export default class CreatePage extends Component {
            return (
                <div>
                  Create a Class
-                 <form onSubmit={this.handleSubmit}>
+                 <form onSubmit={this.handleSubmit} >
                    <label >
                      Class
-                     <input onChange={e => this.setState({ job: e.target.value })} />
+                     <input 
+                     onChange={e => this.setState({ job: e.target.value })} 
+                     value={this.state.class}
+                     />
                    </label>
                    <label >
                      Cool Factor
-                     <input  onChange={e => this.setState({ cool_factor: e.target.value })} />
+                     <input  
+                     onChange={e => this.setState({ cool_factor: e.target.value })} 
+                     value={this.state.cool_factor}
+                     />
                    </label>
                    <label>
                      Role
@@ -57,8 +88,11 @@ export default class CreatePage extends Component {
                        </option>)}
                      </select>
                    </label>
-                   <button type='submit'>Submit</button>
+                   <button type='submit'>Update Class</button>
                  </form>
+                  <form onSubmit={this.handleDelete}>
+                    <button type='submit'>Delete Button</button>
+                  </form>
                </div>
            )
        }
