@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { fetchRoles, createClass } from '../fetches.js'
+import { fetchRoles, updateClass } from '../fetches.js'
 
 export default class CreatePage extends Component {
   state = {
@@ -17,7 +17,9 @@ export default class CreatePage extends Component {
     e.preventDefault();
 
 
-    await createClass({
+    await updateClass(
+        this.props.match.params.id,
+        {
       name: this.state.job,
       cool_factor: this.state.cool_factor,
       role_id: this.state.role,

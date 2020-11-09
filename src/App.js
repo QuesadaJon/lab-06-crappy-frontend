@@ -3,16 +3,29 @@ import {
     BrowserRouter as Router, 
     Route, 
     Switch,
+    Link
 } from 'react-router-dom';
 import './App.css'
 import ListPage from './function-pages/ListPage.js';
 import CreatePage from './function-pages/CreatePage.js';
+import UpdatePage from './function-pages/DetailsPage';
+import DetailsPage from './function-pages/DetailsPage';
 
 export default class App extends Component {
     render() {
         return (
             <div>
                 <Router>
+                    <nav>
+                        <ul className="nav-links">
+                          <li>
+                            <Link to="/">Classes</Link>
+                          </li>
+                          <li>
+                            <Link to="/create">Make New Class</Link>
+                          </li>
+                        </ul>
+                    </nav>
                     <Switch>
                         <Route 
                             path="/" 
@@ -24,7 +37,12 @@ export default class App extends Component {
                             exact
                             render={(routerProps) => <CreatePage {...routerProps} />} 
                         />
-                    </Switch>
+                        <Route 
+                            path="/details/:id" 
+                            exact
+                            render={(routerProps) => <DetailsPage {...routerProps} />} 
+                        />
+                        </Switch>
                 </Router>
             </div>
         )
