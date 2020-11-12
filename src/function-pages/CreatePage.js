@@ -50,7 +50,7 @@ export default class CreatePage extends Component {
                      Role
                      <select onChange={this.handleChange}>
                        {this.state.roles.map(role => 
-                       <option key={role.id} value={role.id}>
+                       <option key={role.id + role.name} value={role.id}>
                          {role.name}
                        </option>)}
                      </select>

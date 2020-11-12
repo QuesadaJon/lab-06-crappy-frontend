@@ -36,9 +36,9 @@ export default class CreatePage extends Component {
     await updateClass(
         this.props.match.params.id,
         {
-      name: this.state.job,
+      name: this.state.class,
       cool_factor: this.state.cool_factor,
-      role_id: this.state.role,
+      role_id: this.state.role_id,
       base_game: false,
       owner_id: 1
     });
@@ -46,7 +46,7 @@ export default class CreatePage extends Component {
     this.props.history.push('/');
   }
 
-  handleClick = async (e) =>{
+  handleDelete = async (e) =>{
     e.preventDefault();
 
     await deleteClass(
@@ -56,11 +56,12 @@ export default class CreatePage extends Component {
     this.props.history.push('/');
   }
 
-  handleDelete = (e) => {
-    this.setState({ role: e.target.value})
+  handleChange = (e) => {
+    this.setState ({ role_id: e.target.value})
   }
        
        render() {
+         console.log(this.state)
            return (
                <div>
                  Create a Class
@@ -68,7 +69,7 @@ export default class CreatePage extends Component {
                    <label >
                      Class
                      <input 
-                     onChange={e => this.setState({ job: e.target.value })} 
+                     onChange={e => this.setState({ class: e.target.value })} 
                      value={this.state.class}
                      />
                    </label>
@@ -83,7 +84,7 @@ export default class CreatePage extends Component {
                      Role
                      <select onChange={this.handleChange}>
                        {this.state.roles.map(role => 
-                       <option key={role.id} value={role.id}>
+                       <option selected={ role.name === this.state.job.role} key={`${role.id}${role.name}`} value={role.id}>
                          {role.name}
                        </option>)}
                      </select>
